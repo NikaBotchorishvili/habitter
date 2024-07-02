@@ -36,4 +36,7 @@ body {
   .darkModeInput {
     @apply bg-darkModeMain px-4 py-3 outline-none  text-darkModeWhite rounded-lg border-2 transition-colors duration-100 border-solid focus:border-[#596A95] border-darkModeMain;
   }
+  .darkModeButton {
+    @apply bg-darkModeMain  text-xl hover:bg-darkModeSecondary transition-colors duration-200 p-3 rounded-md;
+  }
 }

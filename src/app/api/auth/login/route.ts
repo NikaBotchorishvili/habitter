@@ -1,4 +1,4 @@
-import { createClient } from "@/libs/supabase/clients/server";
+import { createClient } from "@/utils/supabase/clients/server";
 import { NextRequest, NextResponse } from "next/server";
 
 export type LoginData = {
@@ -6,7 +6,7 @@ export type LoginData = {
 	password: string;
 };
 
-export async function POST (request: NextRequest) {
+export async function POST(request: NextRequest) {
 	const { email, password } = (await request.json()) as LoginData;
 	if (email.trim() === "" || !email) {
 		return NextResponse.json(
@@ -27,10 +27,10 @@ export async function POST (request: NextRequest) {
 		email: email,
 		password: password,
 	});
-    
+
 	if (error) {
-        console.log(error)
+		console.log(error);
 		return NextResponse.json({ error: error.message }, { status: 401 });
 	}
 	return NextResponse.json({ message: "Login successful" }, { status: 200 });
-};
+}

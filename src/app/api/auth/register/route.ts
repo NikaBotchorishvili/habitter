@@ -1,4 +1,4 @@
-import { createClient } from "@/libs/supabase/clients/server";
+import { createClient } from "@/utils/supabase/clients/server";
 import { NextRequest, NextResponse } from "next/server";
 
 export type RegisterData = {
@@ -6,11 +6,11 @@ export type RegisterData = {
 	password: string;
 };
 export const POST = async (request: NextRequest) => {
-	console.log("data")
+	console.log("data");
 	const url = new URL(request.url);
 
 	const { email, password } = (await request.json()) as RegisterData;
-	console.log(email, password)
+	console.log(email, password);
 	if (email.trim() === "" || !email) {
 		return NextResponse.json(
 			{ error: "Email is required" },
@@ -33,9 +33,12 @@ export const POST = async (request: NextRequest) => {
 			emailRedirectTo: `${url.origin}/auth/callback`,
 		},
 	});
-	if(error){
-		console.log(error)
+	if (error) {
+		console.log(error);
 		return NextResponse.json({ error: error.message }, { status: 401 });
 	}
-	return NextResponse.json({ message: "Registration successful" }, { status: 200 })
+	return NextResponse.json(
+		{ message: "Registration successful" },
+		{ status: 200 }
+	);
 };
