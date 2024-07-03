@@ -3,9 +3,9 @@ type Props = {
 };
 const XCenterContainer: React.FC<Props> = ({ children }) => {
 	return (
-		<section className="flex flex-col items-center mt-10">
+		<main className="flex flex-col items-center mt-10">
 			{children}
-		</section>
+		</main>
 	);
 };
 

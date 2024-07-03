@@ -6,3 +6,15 @@ export const getCurrentUser = async (): Promise<UserResponse> => {
 	const data = await supabase.auth.getUser();
 	return data;
 };
+
+export const getHabitById = async (habit_id: string) => {
+	const supabase = await createClient();
+	const { data, error } = await supabase
+		.from("habits")
+		.select("*")
+		.eq("id", habit_id)
+		.single();
+
+	if (error) throw error;
+	return data;
+}

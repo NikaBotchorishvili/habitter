@@ -1,14 +1,19 @@
 import { PrivateRoute } from "@/components/common/PrivateRoute";
 import { supabase } from "@/utils/supabase/clients/client";
 import { getCurrentUser } from "./actions";
-import Calendar from "@/app/libs/Calendar";
-import Link from "next/link";
-import Button from "@/components/common/ui/Button";
 import XCenterContainer from "@/components/containers/XCenterContainer";
+import { UserResponse } from "@supabase/supabase-js";
+import Dashboard from "@/components/Dashboard";
+import { Suspense } from "react";
+import Loading from "./edit/[habit_id]/loading";
 export default async function Home() {
-	const getHabits = async () => {
+	const getHabitsByCurrentUser = async (user: UserResponse) => {
 		try {
-			const { data, error } = await supabase.from("habits").select("*");
+			if (user.error) throw user.error;
+			const { data, error } = await supabase
+				.from("habits")
+				.select("*")
+				.eq("user_id", user.data.user?.id);
 
 			if (error) throw error;
 
@@ -18,38 +23,23 @@ export default async function Home() {
 		}
 	};
 
-	let data = await getHabits();
+	const currentUser = await getCurrentUser();
+	let habitsByUser = await getHabitsByCurrentUser(currentUser);
 
-	const currentUser = getCurrentUser();
 	return (
 		<PrivateRoute>
 			<XCenterContainer>
-				<div className="flex flex-col gap-y-5">
-					{currentUser && (
-						<p>
-							Welcome Back, {(await currentUser).data.user?.email}
-						</p>
-					)}
-
-					<ul>
-						{data &&
-							data.map((habit) => (
-								<li
-									className="text-3xl text-white"
-									key={habit.id}
-								>
-									{habit.title}
-								</li>
-							))}
-					</ul>
-					<Link href="#" className="dark:darkModeButton">
-						Add a new habit
-					</Link>
-					<div className="fixed right-10 bottom-10">
-						<Calendar togglable={true}/>
-					</div>
-				</div>
+				<Suspense fallback={<Loading />}>
+				
+				<Dashboard
+					currentUser={currentUser.data.user}
+					habitsByUser={habitsByUser}
+					/>
+					</Suspense>
 			</XCenterContainer>
 		</PrivateRoute>
 	);
 }
+
+
+export const revalidate = 0;
