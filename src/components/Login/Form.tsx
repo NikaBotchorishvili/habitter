@@ -82,7 +82,7 @@ const LoginForm = () => {
 				<Button label="Login" />
 			</form>
 			<div>
-				<span>Don't have an account yet? Register from </span>
+				<span>Don&apos;t have an account yet? Register from </span>
 				<Link className="underline text-blue-500" href="/register">Here</Link>
 			</div>
 		</CenterContainer>
