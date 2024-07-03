@@ -22,6 +22,7 @@ const HabitForm: React.FC<Props> = ({initialValues, onSubmitHandler}) => {
 		if(initialValues){
 			router.push("/")
 		}
+		router.refresh();
     };
 	return (
 		<form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-y-5 w-full">

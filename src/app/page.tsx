@@ -13,7 +13,8 @@ export default async function Home() {
 			const { data, error } = await supabase
 				.from("habits")
 				.select("*")
-				.eq("user_id", user.data.user?.id);
+				.eq("user_id", user.data.user?.id)
+				.order("ordering", { ascending: true });
 
 			if (error) throw error;
 
@@ -30,16 +31,14 @@ export default async function Home() {
 		<PrivateRoute>
 			<XCenterContainer>
 				<Suspense fallback={<Loading />}>
-				
-				<Dashboard
-					currentUser={currentUser.data.user}
-					habitsByUser={habitsByUser}
+					<Dashboard
+						currentUser={currentUser.data.user}
+						habitsByUser={habitsByUser}
 					/>
-					</Suspense>
+				</Suspense>
 			</XCenterContainer>
 		</PrivateRoute>
 	);
 }
-
 
 export const revalidate = 0;
