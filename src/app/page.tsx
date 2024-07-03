@@ -4,6 +4,7 @@ import { getCurrentUser } from "./actions";
 import Calendar from "@/app/libs/Calendar";
 import Link from "next/link";
 import Button from "@/components/common/ui/Button";
+import XCenterContainer from "@/components/containers/XCenterContainer";
 export default async function Home() {
 	const getHabits = async () => {
 		try {
@@ -22,7 +23,7 @@ export default async function Home() {
 	const currentUser = getCurrentUser();
 	return (
 		<PrivateRoute>
-			<section className="flex flex-col items-center mt-10">
+			<XCenterContainer>
 				<div className="flex flex-col gap-y-5">
 					{currentUser && (
 						<p>
@@ -45,10 +46,10 @@ export default async function Home() {
 						Add a new habit
 					</Link>
 					<div className="fixed right-10 bottom-10">
-						<Calendar />
+						<Calendar togglable={true}/>
 					</div>
 				</div>
-			</section>
+			</XCenterContainer>
 		</PrivateRoute>
 	);
 }

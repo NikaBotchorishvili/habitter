@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Month, DateType, months } from "./types";
+import { Month, DateType, months } from "../types";
 
 type ReturnType = {
     date: DateType;
