@@ -1,44 +1,43 @@
+"use client";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-
 import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
 import Link from "next/link";
-import { useSortable } from "@dnd-kit/sortable";
-import { CSS } from "@dnd-kit/utilities";
+import React, { useState } from "react";
+import Delete from "./Delete";
+
 type Props = {
 	item: any;
 	fields: string[];
 	edit: boolean;
 	del: boolean;
-	titleField: string
+	titleField: string;
 };
 
-const Habit: React.FC<Props> = ({ item, fields, edit, del, titleField }) => {
-	const { setNodeRef, listeners, attributes, transform, transition } =
-		useSortable({
-			id: item.id,
-		});
+const Item: React.FC<Props> = ({ item, fields, edit, del, titleField }) => {
+	const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
 
-	const style = {
-		transition,
-		transform: CSS.Transform.toString(transform),
+	const handleTrashClick = () => {
+		setIsDeleteDialogOpen(true);
+		console.log("Trash click: showing dialog");
 	};
+
+	const handleCloseDeleteDialog = () => {
+		setIsDeleteDialogOpen(false);
+		console.log("Closing dialog");
+	};
+
 	return (
 		<li
-			{...listeners}
-			{...attributes}
-			style={style}
-			ref={setNodeRef}
-			className={`flex select-none  cursor-grab justify-between items-center text-lg text-white`}
+			className={`flex select-none cursor-pointer justify-between items-center text-lg text-white`}
 		>
 			{fields.map((field) => (
 				<small key={field}>{item[field]}</small>
 			))}
-
 			<div className="flex items-center gap-x-4">
 				{edit && (
 					<Link
-						title={`Edit ${item[titleField]}`}
-						href={`/edit/${item[titleField]}`}
+						title={`Edit ${item["id"]}`}
+						href={`/edit/${item["id"]}`}
 					>
 						<FontAwesomeIcon
 							className="cursor-pointer size-[17px]"
@@ -47,14 +46,21 @@ const Habit: React.FC<Props> = ({ item, fields, edit, del, titleField }) => {
 					</Link>
 				)}
 				{del && (
-					<FontAwesomeIcon
-						className="cursor-pointer size-[17px]"
-						icon={faTrash}
-					/>
+					<>
+						<FontAwesomeIcon
+							className="cursor-pointer size-[17px]"
+							icon={faTrash}
+							onClick={handleTrashClick}
+						/>
+						<Delete
+							isOpen={isDeleteDialogOpen}
+							onClose={handleCloseDeleteDialog}
+						/>
+					</>
 				)}
 			</div>
 		</li>
 	);
 };
 
-export default Habit;
+export default Item;

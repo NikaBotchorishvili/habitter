@@ -4,22 +4,10 @@ import {
 	faDashboard,
 } from "@fortawesome/free-solid-svg-icons";
 import Image from "next/image";
-import { faDoorClosed } from "@fortawesome/free-solid-svg-icons/faDoorClosed";
 import NavLink from "./NavLink";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import LogoutButton from "./Logout/main";
 
 const Sidebar = () => {
-	const handleLogout = async () => {
-		try {
-			const res = await fetch("/api/auth/logout");
-			if (!res.ok) {
-				throw new Error("Failed to logout");
-			}
-		} catch (err) {
-			console.error(err);
-		}
-	};
 	return (
 		<aside
 			className="fixed top-0  left-0 z-40 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0"
@@ -43,18 +31,17 @@ const Sidebar = () => {
 						/>
 
 						<NavLink
-							href="#"
+							href="/manage"
 							title={"Manage Habits"}
 							icon={faBook}
 						/>
 						<NavLink
-							href="#"
+							href="/journal"
 							title={"Journal"}
 							icon={faBookAtlas}
 						/>
 					</div>
 					<LogoutButton />
-					
 				</nav>
 			</div>
 		</aside>

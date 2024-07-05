@@ -9,25 +9,51 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
+      completed_habits: {
+        Row: {
+          created_at: string
+          habit_id: string | null
+          id: number
+        }
+        Insert: {
+          created_at?: string
+          habit_id?: string | null
+          id?: number
+        }
+        Update: {
+          created_at?: string
+          habit_id?: string | null
+          id?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "completed_habits_habit_id_fkey"
+            columns: ["habit_id"]
+            isOneToOne: false
+            referencedRelation: "habits"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       habits: {
         Row: {
           created_at: string
-          id: number
-          ordering: number
+          id: string
+          ordering: number | null
           title: string
           user_id: string | null
         }
         Insert: {
           created_at?: string
-          id?: number
-          ordering?: number
+          id?: string
+          ordering?: number | null
           title?: string
           user_id?: string | null
         }
         Update: {
           created_at?: string
-          id?: number
-          ordering?: number
+          id?: string
+          ordering?: number | null
           title?: string
           user_id?: string | null
         }

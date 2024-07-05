@@ -6,33 +6,42 @@ import { Database } from "../../../../types/supabase";
 import { useRouter } from "next/navigation";
 
 type Props = {
-    onSubmitHandler: (habit: string) => Promise<void>;
-    initialValues: Database["public"]["Tables"]["habits"]["Row"] | undefined;
-}
+	onSubmitHandler: (habit: string, id?: string) => Promise<void>;
+	initialValues: Database["public"]["Tables"]["habits"]["Row"] | undefined;
+};
 
 export type FormData = {
 	habit: string;
 };
 
-const HabitForm: React.FC<Props> = ({initialValues, onSubmitHandler}) => {
-	const router = useRouter();
-	const { register, handleSubmit, formState } = useForm<FormData>({defaultValues: {habit: initialValues?.title || ""}});
-    const onSubmit = async (data: FormData) => {
-		await onSubmitHandler(data.habit);
-		if(initialValues){
-			router.push("/")
+const HabitForm: React.FC<Props> = ({ initialValues, onSubmitHandler }) => {
+	const router = useRouter();	
+	const { register, handleSubmit, formState, setValue } = useForm<FormData>({
+		defaultValues: { habit: initialValues?.title || "" },
+	});
+	const onSubmit = async ({habit}: FormData) => {
+		await onSubmitHandler(habit, initialValues?.id);
+		if(initialValues && initialValues.id){
+			router.replace("/")
 		}
-		router.refresh();
-    };
+
+		
+		setValue("habit", "");
+	};
 	return (
-		<form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-y-5 w-full">
+		<form
+			onSubmit={handleSubmit(onSubmit)}
+			className="flex flex-col gap-y-5 w-full"
+		>
 			<Input
 				label="Habit"
-				register={register("habit")}
+				register={register("habit", {
+					required: "This field is required",
+				})}
 				placeholder="Enter a habit"
 				error={formState.errors.habit?.message}
 			/>
-            <Button label="Submit" />
+			<Button label="Submit" />
 		</form>
 	);
 };

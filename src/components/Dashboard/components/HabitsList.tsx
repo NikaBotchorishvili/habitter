@@ -1,8 +1,10 @@
-import { DragEndEvent } from "@dnd-kit/core";
+"use client"
 import { Database } from "../../../../types/supabase";
 import List from "@/components/common/ui/List";
 import { handleReOrderParams } from "../../../../types/general";
 import { createClient } from "@/utils/supabase/clients/server";
+import { useState } from "react";
+import { reOrderHabits } from "@/app/actions";
 
 type Props = {
 	habits: Database["public"]["Tables"]["habits"]["Row"][];
@@ -14,50 +16,18 @@ const HabitsList: React.FC<Props> = ({ habits }) => {
 		item_one_id,
 		item_two_id,
 	}: handleReOrderParams) => {
-		"use server";
-		try {
-			const supabase = await createClient();
+		try{
+            const response = await reOrderHabits({item_one_id, item_two_id});
+        }catch(error){
+            console.error(error);
+        }
 
-			const { data: item_one, error: item_one_error } = await supabase
-				.from("habits")
-				.select("*")
-				.eq("id", item_one_id)
-				.maybeSingle();
-			const { data: item_two, error: item_two_error } = await supabase
-				.from("habits")
-				.select("*")
-				.eq("id", item_two_id)
-				.maybeSingle();
-
-			if (item_one_error || item_two_error)
-				throw item_one_error || item_two_error;
-
-			if (!item_one || !item_two) throw new Error("Item not found");
-
-            const { error: update_one_error } = await supabase
-                .from("habits")
-                .update({ ordering: item_two.ordering })
-                .eq("id", item_one_id);
-            if (update_one_error) throw update_one_error;
-
-            const { error: update_two_error } = await supabase
-                .from("habits")
-                .update({ ordering: item_one.ordering })
-                .eq("id", item_two_id);
-
-            if (update_two_error) throw update_two_error;
-
-
-		} catch (error) {
-			console.error("Reordering error:", error);
-		}
 	};
-
 	return (
 		<List
 			handleReOrder={handleReOrder}
 			items={habits}
-			fields={["id", "title"] as Fields[]}
+			fields={["title"] as Fields[]}
 			keyPrefix="habit"
 			titleField="title"
 			del={true}
