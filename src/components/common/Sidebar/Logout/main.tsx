@@ -28,7 +28,7 @@ const LogoutButton = () => {
 	return (
 		<form
 			onSubmit={(e) =>handleLogout(e)}
-			className="flex items-center p-2 text-gray-900 rounded-lg dark:text-darkModeWhite hover:bg-gray-100 dark:hover:bg-darkModeSecondary group"
+			className="flex items-center p-2 text-gray-900 rounded-lg dark:text-darkModeLight hover:bg-gray-100 dark:hover:bg-darkModeBackground group"
 		>
 			<button type="submit" className="flex">
 				<FontAwesomeIcon className="size-[25px]" icon={faDoorClosed} />

@@ -14,5 +14,4 @@ export const PrivateRoute = async ({ children }: Props) => {
 	}
 
 	return <>{children}</>;
-	// return <p>Hello {data.user.email}</p>
 };

@@ -15,10 +15,10 @@ const Dashboard: React.FC<Props> = ({ currentUser, habitsByUser }) => {
 
 
 	return (
-		<div className="flex flex-col items-center md:max-w-md gap-y-16">
-			<h1 className="text-3xl">Welcome Back, {currentUser?.email}</h1>
+		<div className="flex flex-col  p-5 box-content  items-center md:max-w-md gap-y-16">
+			<h1 className="text-2xl text-wrap font-bold text-lightModePrimary dark:text-darkModePrimary">Welcome Back, {currentUser?.email}</h1>
 			<section className="space-y-5  mx-auto w-full">
-				<h2 className="text-xl text-center">Create a new habit!</h2>
+				<h2 className="text-xl font-bold text-lightModePrimary dark:text-darkModeLight text-center">Create a new habit!</h2>
 				<HabitForm
 					initialValues={undefined}
 					onSubmitHandler={createNewHabit}
@@ -32,7 +32,7 @@ const Dashboard: React.FC<Props> = ({ currentUser, habitsByUser }) => {
 			</section>
 
 			<div className="fixed right-10 bottom-10">
-				<Calendar togglable={true} />
+				<Calendar activity={[]}  dateField={""} togglable={true} />
 			</div>
 		</div>
 	);

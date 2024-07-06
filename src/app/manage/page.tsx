@@ -15,7 +15,7 @@ const Manage = async () => {
 		<PrivateRoute>
 			<XCenterContainer>
 				<section className="flex flex-col items-center justify-center gap-y-16">
-					<h1 className="text-3xl">Manage Habits</h1>
+					<h1 className="text-3xl text-lightModePrimary dark:text-darkModePrimary">Manage Habits</h1>
 					<section className="flex flex-col items-center justify-center space-y-4">
 						<ManageHabitsSection
 							habits={
@@ -27,7 +27,7 @@ const Manage = async () => {
 						/>
 					</section>
 				</section>
-				<Calendar dateField="created_at" activity={allUserCompletedHabits?.data || []}type="activity" />
+				<Calendar dateField="created_at" activity={allUserCompletedHabits?.data || []} type="activity" />
 			</XCenterContainer>
 		</PrivateRoute>
 	);

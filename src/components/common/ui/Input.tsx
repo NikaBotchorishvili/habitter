@@ -13,7 +13,7 @@ const Input: React.FC<Props> = ({label, placeholder, error, register, type = "te
         <div className="flex flex-col gap-y-1  w-full">
             <label htmlFor="">{label}</label>
             <input
-                className="dark:darkModeInput w-full"
+                className="dark:darkModeInput lightModeInput w-full"
                 placeholder={placeholder}
                 type={type}
                 {...register}

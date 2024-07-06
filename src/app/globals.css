@@ -2,41 +2,34 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
-}
-
 @media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
-}
-
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+	:root {
+		--foreground-rgb: 255, 255, 255;
+		--background-start-rgb: 0, 0, 0;
+		--background-end-rgb: 0, 0, 0;
+	}
 }
 
 @layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
+	.text-balance {
+		text-wrap: balance;
+	}
 }
 
-@layer components {
-  .darkModeInput {
-    @apply bg-darkModeMain px-4 py-3 outline-none  text-darkModeWhite rounded-lg border-2 transition-colors duration-100 border-solid focus:border-[#596A95] border-darkModeMain;
-  }
-  .darkModeButton {
-    @apply bg-darkModeMain  text-xl hover:bg-darkModeSecondary transition-colors duration-200 p-3 rounded-md;
-  }
+@layer utilities {
+	.darkModeInput {
+		@apply bg-transparent px-4 py-3 outline-none  text-darkModeLight rounded-lg border-2 transition-colors duration-100 border-solid border-opacity-70 focus:border-opacity-100 border-darkModePrimary;
+	}
+	.darkModeButton {
+		@apply bg-darkModeSecondary text-darkModeLight text-xl hover:bg-darkModePrimary hover:text-RichBlack font-bold transition-colors duration-200 p-3 rounded-md;
+	}
+	.darkModeButtonV2 {
+		@apply bg-darkModeBackground text-darkModeLight text-xl hover:bg-darkModePrimary hover:text-RichBlack font-bold transition-colors duration-200 p-3 rounded-md;
+	}
+	.lightModeInput {
+		@apply bg-transparent px-4 py-3 outline-none  text-darkModeLight rounded-lg border-2 transition-colors duration-100 border-solid border-opacity-70 focus:border-opacity-100 border-lightModePrimary;
+	}
+	.lightModeButton {
+		@apply bg-lightModeSecondary text-RichBlack text-xl hover:bg-lightModePrimary hover:text-white font-bold transition-colors duration-200 p-3 rounded-md;
+	}
 }

@@ -18,7 +18,6 @@ type Props = {
 const HabitList: React.FC<Props> = ({ habits }) => {
 	const [localData, setLocalData] =
 		useOptimistic<CompleteAndIncompleteHabits>(habits);
-	console.log(habits);
 	const handleIncompleteToComplete = async (id: string) => {
 		try {
 			setLocalData((state) => {

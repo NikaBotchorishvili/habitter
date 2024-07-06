@@ -21,6 +21,7 @@
     "glob": "^9.0.0",
     "lru-cache": "^10.3.0",
     "next": "14.2.4",
+    "next-themes": "^0.3.0",
     "react": "^18",
     "react-beautiful-dnd": "^13.1.1",
     "react-dnd": "^16.0.1",

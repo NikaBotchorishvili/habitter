@@ -23,21 +23,21 @@ const CalendarView: React.FC<Props> = ({
 	handleNext,
 }) => {
 	return (
-		<section className="mx-auto p-4 max-w-md w-full dark:bg-darkModeMain ">
+		<section className="mx-auto dark:text-darkModeLight text-lightModeLight p-4 max-w-md w-full dark:bg-darkModeBackground shadow-2xl rounded-md ">
 			<div className="p-2 space-y-4">
 				<article className="flex justify-between items-center">
-					<small className=" text-2xl">
+					<small className="text-lightModePrimary dark:text-darkModePrimary text-2xl">
 						{currentMonth} {currentYear}
 					</small>
 					<nav className="flex space-x-8">
 						<FontAwesomeIcon
-							className="cursor-pointer size-[18px] rounded-full dark:hover:bg-darkModeSecondary p-2 transition-colors duration-150"
+							className="cursor-pointer size-[18px] rounded-full text-lightModePrimary dark:text-darkModePrimary hover:bg-lightModeSecondary  dark:hover:bg-darkModeSecondary p-2 transition-colors duration-150"
 							title="Previous month"
 							icon={faAngleLeft}
 							onClick={handlePrev}
 						/>
 						<FontAwesomeIcon
-							className="cursor-pointer size-[18px] rounded-full dark:hover:bg-darkModeSecondary p-2 transition-colors duration-150"
+							className="cursor-pointer size-[18px] rounded-full text-lightModePrimary dark:text-darkModePrimary hover:bg-lightModeSecondary dark:hover:bg-darkModeSecondary p-2 transition-colors duration-150"
 							title="Next month"
 							icon={faAngleRight}
 							onClick={handleNext}
@@ -50,7 +50,7 @@ const CalendarView: React.FC<Props> = ({
 						(day) => (
 							<div
 								key={day}
-								className="col-span-1 dark:bg-darkModeSecondary p-1 box-content rounded shadow text-center"
+								className="col-span-1 bg-lightModeSecondary dark:bg-darkModeSecondary p-1 box-content rounded shadow text-center"
 							>
 								{day}
 							</div>

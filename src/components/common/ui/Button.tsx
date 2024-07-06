@@ -4,7 +4,7 @@ type Props = {
 
 const Button: React.FC<Props> = ({label}) => {
     return (
-        <button className="dark:darkModeButton">
+        <button className="dark:darkModeButton lightModeButton">
             {label}
         </button>
     );

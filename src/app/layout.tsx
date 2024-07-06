@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Inter, Roboto_Mono } from "next/font/google";
 import "./globals.css";
 import Sidebar from "@/components/common/Sidebar";
+import { ThemeProvider } from "@/providers/ThemeProvider";
+
 const robotoMono = Roboto_Mono({ subsets: ["latin"], weight: ["400"] });
 export const metadata: Metadata = {
 	title: "Habitter",
@@ -15,12 +17,14 @@ export default function RootLayout({
 	children: React.ReactNode;
 }>) {
 	return (
-		<html lang="en">
-			<body className={`${robotoMono.className} flex`}>
-				<Sidebar />
-				<div className="ml-64 relative flex-grow w-screen">
-					{children}
-				</div>
+		<html lang="en" suppressHydrationWarning>
+			<body className={`${robotoMono.className} flex bg-lightModeBackground dark:bg-darkModeBackground`}>
+				<ThemeProvider>
+					<Sidebar />
+					<div className="ml-64 relative flex-grow w-screen">
+						{children}
+					</div>
+				</ThemeProvider>
 			</body>
 		</html>
 	);

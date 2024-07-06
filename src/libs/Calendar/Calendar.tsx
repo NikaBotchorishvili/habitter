@@ -111,7 +111,7 @@ const CalendarComponent: React.FC<Props> = ({
 			</>
 		) : (
 			<div
-				className="dark:darkModeButton"
+				className="dark:darkModeButton lightModeButton cursor-pointer"
 				onClick={() => setToggled(true)}
 			>
 				Open Calendar

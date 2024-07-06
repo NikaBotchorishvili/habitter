@@ -28,7 +28,7 @@ const Item: React.FC<Props> = ({ item, fields, edit, del, titleField }) => {
 
 	return (
 		<li
-			className={`flex select-none cursor-pointer justify-between items-center text-lg text-white`}
+			className={`flex select-none cursor-pointer justify-between items-center text-xl dark:text-darkModeLight text-lightModePrimary font-bold`}
 		>
 			{fields.map((field) => (
 				<small key={field}>{item[field]}</small>

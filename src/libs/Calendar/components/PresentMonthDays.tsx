@@ -24,14 +24,13 @@ const PresentMonthDays: React.FC<Props> = ({
 		currentYear === date.year;
 	const hasActivity = activity.length > 0;
 	const styling = hasActivity
-		? "dark:bg-red-900 text-white"
-		: isCurrentDate
-		? "dark:bg-green-500 text-white"
+		? "bg-red-800 dark:bg-red-800 text-white"
 		: "";
-	
 	return (
 		<div
-			className={`col-span-1 dark:bg-darkModeSecondary  p-1 box-content rounded shadow text-center cursor-pointer ${styling}`}
+			className={`col-span-1 bg-lightModeSecondary dark:bg-darkModeSecondary  p-1 box-content rounded shadow text-center cursor-pointer ${
+				isCurrentDate ? "bg-green-500 dark:bg-green-500 text-white" : styling
+			}`}
 		>
 			{day}
 		</div>

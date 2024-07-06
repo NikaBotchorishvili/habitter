@@ -1,3 +1,4 @@
+"use client"
 import {
 	faBook,
 	faBookAtlas,
@@ -6,24 +7,20 @@ import {
 import Image from "next/image";
 import NavLink from "./NavLink";
 import LogoutButton from "./Logout/main";
+import ThemeToggle from "./ThemeToggle";
 
 const Sidebar = () => {
 	return (
 		<aside
-			className="fixed top-0  left-0 z-40 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0"
+			className="fixed top-0  left-0 z-40 w-64 h-screen transition-transform shadow-2xl -translate-x-full sm:translate-x-0"
 			aria-label="Sidebar"
 		>
-			<div className="flex h-full  px-3 py-4  overflow-y-auto bg-gray-50 dark:bg-darkModeMain">
+			<div className="flex h-full  px-3 py-4  overflow-y-auto bg-lightModeSecondary   dark:bg-darkModeSecondary">
 				<nav className="flex flex-col justify-between w-full h-[80%] my-auto  font-medium">
-					<div>
-						<Image
-							alt="logo"
-							src="/Habitter.svg"
-							width={100}
-							height={100}
-						/>
+					<div className="dark:text-white text-darkModeBackground text-3xl font-extrabold tracking-wider">
+						Habitter
 					</div>
-					<div className="ml-5 space-y-8">
+					<div className="ml-5 space-y-8 ">
 						<NavLink
 							href="/"
 							title={"Dashboard"}
@@ -40,6 +37,7 @@ const Sidebar = () => {
 							title={"Journal"}
 							icon={faBookAtlas}
 						/>
+					<ThemeToggle />
 					</div>
 					<LogoutButton />
 				</nav>
