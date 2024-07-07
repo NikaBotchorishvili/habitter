@@ -26,6 +26,10 @@
 	.darkModeButtonV2 {
 		@apply bg-darkModeBackground text-darkModeLight text-xl hover:bg-darkModePrimary hover:text-RichBlack font-bold transition-colors duration-200 p-3 rounded-md;
 	}
+	.lightModeButtonV2 {
+		@apply bg-lightModeBackground text-RichBlack text-xl hover:bg-lightModePrimary hover:text-white font-bold transition-colors duration-200 p-3 rounded-md;
+		
+	}
 	.lightModeInput {
 		@apply bg-transparent px-4 py-3 outline-none  text-darkModeLight rounded-lg border-2 transition-colors duration-100 border-solid border-opacity-70 focus:border-opacity-100 border-lightModePrimary;
 	}

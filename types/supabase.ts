@@ -13,17 +13,17 @@ export type Database = {
         Row: {
           created_at: string
           habit_id: string | null
-          id: number
+          id: string
         }
         Insert: {
           created_at?: string
           habit_id?: string | null
-          id?: number
+          id?: string
         }
         Update: {
           created_at?: string
           habit_id?: string | null
-          id?: number
+          id?: string
         }
         Relationships: [
           {
@@ -31,6 +31,35 @@ export type Database = {
             columns: ["habit_id"]
             isOneToOne: false
             referencedRelation: "habits"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      daily_journal: {
+        Row: {
+          content: string | null
+          entry_datetime: string
+          id: string | null
+          user_id: string | null
+        }
+        Insert: {
+          content?: string | null
+          entry_datetime?: string
+          id?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          content?: string | null
+          entry_datetime?: string
+          id?: string | null
+          user_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "daily_jounrnal_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "users"
             referencedColumns: ["id"]
           },
         ]

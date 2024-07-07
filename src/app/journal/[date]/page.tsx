@@ -2,11 +2,16 @@ import { PrivateRoute } from "@/components/common/PrivateRoute";
 import Input from "@/components/common/ui/Input";
 import XCenterContainer from "@/components/containers/XCenterContainer";
 import JournalAddForm from "@/components/Journal/Form/AddForm";
-import { getJournalEntries } from "./actions";
+import { getJournalEntries } from "../actions";
 import { DailyJournalList } from "@/components/Journal/DailyJournalList";
 
-const JournalPage = async () => {
-	const entries = (await getJournalEntries()) || [];
+const JournalPageByDate = async ({
+	params: { date },
+}: {
+	params: { date: string };
+}) => {
+	const entries =
+		(await getJournalEntries(new Date(decodeURIComponent(date)))) || [];
 	return (
 		<PrivateRoute>
 			<XCenterContainer>
@@ -26,4 +31,4 @@ const JournalPage = async () => {
 	);
 };
 
-export default JournalPage;
+export default JournalPageByDate;

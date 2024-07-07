@@ -1,5 +1,5 @@
-import { createClient } from "@/utils/supabase/clients/server";
-import { User } from "@supabase/supabase-js";
+"use server"
+
 import { Database } from "../../../types/supabase";
 import fetchWrapper from "@/utils/fetchWrapper";
 import { revalidateTag } from "next/cache";
