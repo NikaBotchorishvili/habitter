@@ -3,44 +3,86 @@ import { NextRequest, NextResponse } from "next/server";
 
 export const PUT = async (
 	request: NextRequest,
-	{ params }: {params: { id: string }}
+	{ params }: { params: { id: string } }
 ): Promise<NextResponse> => {
-    try{
-        const supabase = await createClient();
-        const { habit_title } = await request.json();
+	try {
+		const supabase = await createClient();
+		const { habit_title } = await request.json();
 
-        if(!habit_title || habit_title.trim() === ""){
-            return NextResponse.json({error: "Habit title is required"}, {status: 400});
-        }
-        const {
-            data: { user },
-            error: userError,
-        } = await supabase.auth.getUser();
-    
-        if (userError || !user) {
-            console.error("Error fetching user:", userError);
-            return NextResponse.json(
-                { error: "User not authenticated" },
-                { status: 401 }
-            );
-        }
-    
-        const { data, error } = await supabase
-            .from("habits")
-            .update({ title: habit_title })
-            .eq("id", params.id);
-    
-        if (error) {
-            console.error("Error updating habit:", error);
-            return NextResponse.json(
-                { error: "Error updating habit" },
-                { status: 500 }
-            );
-        }
-    
-        return NextResponse.json({ data }, { status: 200 });
+		if (!habit_title || habit_title.trim() === "") {
+			return NextResponse.json(
+				{ error: "Habit title is required" },
+				{ status: 400 }
+			);
+		}
+		const {
+			data: { user },
+			error: userError,
+		} = await supabase.auth.getUser();
 
-    }catch(error){
-        return NextResponse.json({error: "Error updating habit"}, {status: 500});
-    }
+		if (userError || !user) {
+			console.error("Error fetching user:", userError);
+			return NextResponse.json(
+				{ error: "User not authenticated" },
+				{ status: 401 }
+			);
+		}
+
+		const { data, error } = await supabase
+			.from("habits")
+			.update({ title: habit_title })
+			.eq("id", params.id);
+
+		if (error) {
+			console.error("Error updating habit:", error);
+			return NextResponse.json(
+				{ error: "Error updating habit" },
+				{ status: 500 }
+			);
+		}
+
+		return NextResponse.json({ data }, { status: 200 });
+	} catch (error) {
+		return NextResponse.json(
+			{ error: "Error updating habit" },
+			{ status: 500 }
+		);
+	}
+};
+
+export const DELETE = async (
+	req: NextRequest,
+	{ params }: { params: { id: string } }
+) => {
+	try {
+		const supabase = await createClient();
+
+		const {
+			data: { user },
+			error: userError,
+		} = await supabase.auth.getUser();
+
+		if (userError || !user) {
+			return NextResponse.json(
+				{ error: "User not authenticated" },
+				{ status: 401 }
+			);
+		}
+
+		const { data, error } = await supabase
+			.from("habits")
+			.delete()
+			.eq("id", params.id);
+
+		if (error) {
+			return NextResponse.json({ error: error }, { status: 500 });
+		}
+
+		return new Response(null, { status: 204 });
+	} catch (error) {
+		return NextResponse.json(
+			{ error: "Error deleting habit" },
+			{ status: 500 }
+		);
+	}
 };

@@ -140,3 +140,20 @@ export const reOrderHabits = async ({
 		console.error("Reordering error:", error);
 	}
 };
+
+
+export const deleteHabit = async (habit_id: string) => {
+	try {
+		const res = await fetchWrapper(`/api/habits/${habit_id}`, {
+			method: "DELETE",
+			next: { tags: ["habits"] },
+		});
+
+		if (!res.ok) {
+			throw new Error("Failed to delete habit");
+		}
+		revalidateTag("habits");
+	} catch (error) {
+		console.error(error);
+	}
+}

@@ -15,7 +15,7 @@ const EditHabitSection: React.FC<Props> = ({ habit })=> {
     return (
         <section className="max-w-md w-full">
             <h1 className="text-center">Edit Habit</h1>
-            <HabitForm onSubmitHandler={updateHabit} initialValues={habit} />
+            <HabitForm successToastMessage={`Habit ${habit.title} edited successfully`} onSubmitHandler={updateHabit} initialValues={habit} />
         </section>
     );
 }

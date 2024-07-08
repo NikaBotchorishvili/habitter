@@ -4,11 +4,12 @@ import List from "@/components/common/ui/List";
 import { handleReOrderParams } from "../../../../types/general";
 import { createClient } from "@/utils/supabase/clients/server";
 import { useState } from "react";
-import { reOrderHabits } from "@/app/actions";
+import { deleteHabit, reOrderHabits } from "@/app/actions";
 
 type Props = {
 	habits: Database["public"]["Tables"]["habits"]["Row"][];
 };
+
 type Fields = keyof Database["public"]["Tables"]["habits"]["Row"];
 
 const HabitsList: React.FC<Props> = ({ habits }) => {
@@ -25,6 +26,7 @@ const HabitsList: React.FC<Props> = ({ habits }) => {
 	};
 	return (
 		<List
+			handleDelete={deleteHabit}
 			handleReOrder={handleReOrder}
 			items={habits}
 			fields={["title"] as Fields[]}

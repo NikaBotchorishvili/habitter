@@ -43,15 +43,14 @@ export const CompleteHabit = async (
 				method: "GET",
 			}
 		);
-		console.log(response);
 		if (!response.ok) {
 			throw new Error("Error completing habit");
 		}
 		const data = await response.json();
+		revalidateTag("manage-habits");
 		return data;
 	} catch (error) {
 		console.error("Error", error);
-		revalidateTag("manage-habits");
 		return undefined;
 	}
 };
@@ -65,7 +64,6 @@ export const IncompleteHabit = async (
 				method: "GET",
 			}
 		);
-		console.log(response);
 		if (!response.ok) {
 			throw new Error("Error completing habit");
 		}

@@ -1,9 +1,11 @@
-"use client";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import Delete from "./Delete";
+import { useDrag } from "react-dnd";
+import { toast } from "react-toastify";
+import { ToastConfiguration } from "../Toast";
 
 type Props = {
 	item: any;
@@ -11,24 +13,48 @@ type Props = {
 	edit: boolean;
 	del: boolean;
 	titleField: string;
+	id: string;
+	deleteHabit: (id: string) => void;
 };
 
-const Item: React.FC<Props> = ({ item, fields, edit, del, titleField }) => {
+const Item: React.FC<Props> = ({ item, fields, edit, del, titleField, id, deleteHabit}) => {
+	const ref = useRef<HTMLLIElement>(null);
+	const [{ isDragging }, drag] = useDrag({
+		type: "habit",
+		item: { id: item.id },
+		collect: (monitor) => ({
+			isDragging: !!monitor.isDragging(),
+		}),
+	});
+	drag(ref);
 	const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
 
 	const handleTrashClick = () => {
 		setIsDeleteDialogOpen(true);
-		console.log("Trash click: showing dialog");
 	};
 
 	const handleCloseDeleteDialog = () => {
 		setIsDeleteDialogOpen(false);
-		console.log("Closing dialog");
+		deleteHabit
 	};
 
+	const handleDelete = async () => {
+		try{
+			await deleteHabit(item.id);
+			setIsDeleteDialogOpen(false);
+			toast.success("Habit deleted successfully", ToastConfiguration);
+
+		}catch(error){
+			console.error(error);
+		}
+	}
 	return (
 		<li
-			className={`flex select-none cursor-pointer justify-between items-center text-xl dark:text-darkModeLight text-lightModePrimary font-bold`}
+			ref={ref}
+			id={id} // Set the id for easier selection
+			className={`flex select-none cursor-pointer dark:bg-opacity-100 rounded-sm py-1 px-5 bg-light bg-lightModeSecondary dark:bg-darkModeSecondary justify-between items-center text-xl ${
+				isDragging && "dark:bg-opacity-100 bg-opacity-100"
+			} dark:text-darkModeLight text-lightModePrimary font-bold`}
 		>
 			{fields.map((field) => (
 				<small key={field}>{item[field]}</small>
@@ -55,6 +81,7 @@ const Item: React.FC<Props> = ({ item, fields, edit, del, titleField }) => {
 						<Delete
 							isOpen={isDeleteDialogOpen}
 							onClose={handleCloseDeleteDialog}
+							onDelete={handleDelete}
 						/>
 					</>
 				)}

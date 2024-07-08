@@ -4,17 +4,20 @@ import Input from "@/components/common/ui/Input";
 import { useForm } from "react-hook-form";
 import { Database } from "../../../../types/supabase";
 import { useRouter } from "next/navigation";
+import { toast } from "react-toastify";
+import { ToastConfiguration } from "@/components/common/ui/Toast";
 
 type Props = {
 	onSubmitHandler: (habit: string, id?: string) => Promise<void>;
 	initialValues: Database["public"]["Tables"]["habits"]["Row"] | undefined;
+	successToastMessage: string;
 };
 
 export type FormData = {
 	habit: string;
 };
 
-const HabitForm: React.FC<Props> = ({ initialValues, onSubmitHandler }) => {
+const HabitForm: React.FC<Props> = ({ initialValues, onSubmitHandler, successToastMessage }) => {
 	const router = useRouter();	
 	const { register, handleSubmit, formState, setValue } = useForm<FormData>({
 		defaultValues: { habit: initialValues?.title || "" },
@@ -25,8 +28,7 @@ const HabitForm: React.FC<Props> = ({ initialValues, onSubmitHandler }) => {
 			router.replace("/")
 		}
 
-		
-		setValue("habit", "");
+		toast.success(successToastMessage, ToastConfiguration);
 	};
 	return (
 		<form
