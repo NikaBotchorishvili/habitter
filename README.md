@@ -23,7 +23,7 @@ Habitter is a habit-tracking and journaling application designed to help users c
 ## Tech Stack
 
 - **Frontend**: Next.js, React, Tailwind CSS
-- **Backend**: Node.js, Express, PostgreSQL
+- **Backend**: Node.js, Next.js Route handlers, PostgreSQL, Supabase
 - **Authentication**: Supabase
 - **Data Visualization**: Chart.js
 
