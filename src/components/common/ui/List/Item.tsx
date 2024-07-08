@@ -51,7 +51,7 @@ const Item: React.FC<Props> = ({ item, fields, edit, del, titleField, id, delete
 	return (
 		<li
 			ref={ref}
-			id={id} // Set the id for easier selection
+			id={id}
 			className={`flex select-none cursor-pointer dark:bg-opacity-100 rounded-sm py-1 px-5 bg-light bg-lightModeSecondary dark:bg-darkModeSecondary justify-between items-center text-xl ${
 				isDragging && "dark:bg-opacity-100 bg-opacity-100"
 			} dark:text-darkModeLight text-lightModePrimary font-bold`}

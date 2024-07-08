@@ -85,7 +85,7 @@ const List: React.FC<Props> = ({
 				<Item
 					deleteHabit={handleDelete}
 					key={`${keyPrefix}-${item.id}`}
-					id={`${keyPrefix}-${item.id}`} // Add id to the Item component for easier selection
+					id={`${keyPrefix}-${item.id}`}
 					fields={fields}
 					item={item}
 					edit={edit}
