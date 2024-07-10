@@ -34,7 +34,7 @@ export const GET = async (req: NextRequest) => {
 		if (!habitsData) {
 			return NextResponse.json({ error: "No data found" }, { status: 404 });
 		}
-        // Flatten the data structure
+    
         const formattedData = habitsData.map((habit) => ({
             id: habit.id,
             created_at: habit.created_at,

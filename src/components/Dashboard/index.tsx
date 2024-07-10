@@ -5,13 +5,19 @@ import HabitForm from "./components/HabitForm";
 import { createClient } from "@/utils/supabase/clients/server";
 import HabitsList from "./components/HabitsList";
 import { createNewHabit } from "@/app/actions";
+import { FormattedHabit } from "../../../types/general";
 
 type Props = {
 	currentUser: User | null;
 	habitsByUser: Database["public"]["Tables"]["habits"]["Row"][] | null;
+	completionsData: FormattedHabit[];
 };
 
-const Dashboard: React.FC<Props> = ({ currentUser, habitsByUser }) => {
+const Dashboard: React.FC<Props> = ({
+	currentUser,
+	habitsByUser,
+	completionsData,
+}) => {
 	return (
 		<div className="flex flex-col  p-5 box-content  items-center md:max-w-md gap-y-16">
 			<h1 className="text-2xl text-wrap font-bold text-lightModePrimary dark:text-darkModePrimary">

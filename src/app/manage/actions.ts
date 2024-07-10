@@ -7,7 +7,7 @@ import { revalidateTag } from "next/cache";
 type CompletedHabit = Database["public"]["Tables"]["completed_habits"]["Row"];
 export type Habit = Database["public"]["Tables"]["habits"]["Row"];
 export type CompleteAndIncompleteHabits = {
-	completedHabits: Database["public"]["Tables"]["habits"]["Row"][];
+	completedHabits: Database["public"]["Tables"]["completed_habits"]["Row"][];
 	incompleteHabits: Database["public"]["Tables"]["habits"]["Row"][];
 };
 
@@ -70,6 +70,8 @@ export const IncompleteHabit = async (
 
 		const data = await response.json();
 		revalidateTag("manage-habits");
+		revalidateTag("completed-habits");
+
 		return data;
 	} catch (error) {
 		console.error("Error", error);
@@ -87,6 +89,7 @@ export const UserActivity = async (): Promise<{data: Habit[]} | undefined> => {
 
 		const data = await response.json();
 		revalidateTag("manage-habits");
+		revalidateTag("completed-habits");
 		return data;
 	} catch (error) {
 		console.error("Error", error);

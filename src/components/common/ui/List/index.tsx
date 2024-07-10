@@ -9,6 +9,7 @@ type Props = {
 	items: any[];
 	fields: any[];
 	handleReOrder: ({ item_one_id, item_two_id }: handleReOrderParams) => void;
+	linkTo?: string;
 	keyPrefix: string;
 	titleField?: string;
 	edit?: boolean;
@@ -24,7 +25,8 @@ const ListComponent: React.FC<Props> = ({
 	edit = true,
 	del = true,
 	titleField = "title",
-	handleDelete
+	handleDelete,
+	linkTo
 }) => {
 	const [localData, setLocalData] = useState<typeof items>(items || []);
 
@@ -44,6 +46,7 @@ const ListComponent: React.FC<Props> = ({
 				data={localData}
 				handleReOrder={handleReOrder}
 				handleDelete={handleDelete}
+				linkTo={linkTo}
 			/>
 		</DndProvider>
 	);

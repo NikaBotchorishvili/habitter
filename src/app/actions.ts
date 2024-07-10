@@ -157,3 +157,21 @@ export const deleteHabit = async (habit_id: string) => {
 		console.error(error);
 	}
 }
+
+export const completedHabits = async () => {
+	try {
+		const res = await fetchWrapper(`/api/habits/completions`, {
+			method: "GET",
+			next: { tags: ["completed-habits"] },
+		});
+
+		if (!res.ok) {
+			throw new Error("Failed to fetch completedHabits");
+		}
+
+		const data = await res.json()
+		return data;
+	} catch (error) {
+		console.error(error);
+	}
+}

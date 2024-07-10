@@ -25,7 +25,7 @@ const HabitItem: React.FC<Props> = (({ habit, type, index }) => {
 	return (
 		<li
 			ref={ref}
-			className={`flex select-none items-center gap-x-4 px-4 py-2 rounded-md text-lightModeLight text-darkModeLight dark:bg-darkModeSecondary bg-lightModeSecondary ${isDragging ? "opacity-70" : ""}`}
+			className={`flex select-none items-center gap-x-4 px-4 py-2 rounded-md text-lightModeLight dark:bg-darkModeSecondary bg-lightModeSecondary ${isDragging ? "opacity-70" : ""}`}
 		>
 			{habit.title}
 		</li>

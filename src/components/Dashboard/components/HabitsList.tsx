@@ -34,6 +34,7 @@ const HabitsList: React.FC<Props> = ({ habits }) => {
 			titleField="title"
 			del={true}
 			edit={true}
+			linkTo="insights"
 		/>
 	);
 };

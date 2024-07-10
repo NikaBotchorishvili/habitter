@@ -13,6 +13,7 @@ type Props = {
 	titleField: string;
 	handleReOrder: ({ item_one_id, item_two_id }: handleReOrderParams) => void;
 	handleDelete: (id: string) => void;
+	linkTo?: string;
 };
 
 const List: React.FC<Props> = ({
@@ -23,7 +24,8 @@ const List: React.FC<Props> = ({
 	edit = true,
 	titleField,
 	handleReOrder,
-	handleDelete
+	handleDelete,
+	linkTo
 }) => {
 	const [hoveredItem, setHoveredItem] = useState<Habit | null>(null);
 
@@ -91,6 +93,7 @@ const List: React.FC<Props> = ({
 					edit={edit}
 					del={del}
 					titleField={titleField}
+					linkTo={linkTo}
 				/>
 			))}
 		</ul>

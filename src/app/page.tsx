@@ -1,5 +1,5 @@
 import { PrivateRoute } from "@/components/common/PrivateRoute";
-import { getCurrentUser, getHabitsByUser } from "./actions";
+import { completedHabits, getCurrentUser, getHabitsByUser } from "./actions";
 import XCenterContainer from "@/components/containers/XCenterContainer";
 import { UserResponse } from "@supabase/supabase-js";
 import Dashboard from "@/components/Dashboard";
@@ -13,7 +13,7 @@ import { Database } from "../../types/supabase";
 export default async function Home() {
 	const currentUser = await getCurrentUser();
 	let habitsByUser = await getHabitsByUser() || [];
-
+	let completionsData = await completedHabits() || [];
 
 	return (
 		<PrivateRoute>
@@ -22,6 +22,7 @@ export default async function Home() {
 					<Dashboard
 						currentUser={currentUser}
 						habitsByUser={habitsByUser}
+						completionsData={completionsData}
 					/>
 				</Suspense>
 			</XCenterContainer>

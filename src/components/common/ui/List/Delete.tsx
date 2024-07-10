@@ -2,7 +2,7 @@ import { faX } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { AnimatePresence, motion } from "framer-motion";
 import React from "react";
-import Overlay from "../../Overlay";
+import Overlay from "../../OverlayWrapper";
 
 type DeleteProps = {
 	isOpen: boolean;
@@ -31,7 +31,12 @@ const Delete: React.FC<DeleteProps> = ({ isOpen, onClose, onDelete }) => {
 							<small>
 								Are you sure you want to delete this item?
 							</small>
-							<button className="dark:darkModeButtonV2 lightModeButtonV2" onClick={onDelete}>Confirm</button>
+							<button
+								className="dark:darkModeButtonV2 lightModeButtonV2"
+								onClick={onDelete}
+							>
+								Confirm
+							</button>
 						</motion.dialog>
 					</Overlay>
 				)}

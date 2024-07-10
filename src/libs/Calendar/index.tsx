@@ -5,18 +5,26 @@ import { Habit } from "@/app/manage/actions";
 type Props = {
 	type?: "activity" | "normal";
 	togglable?: boolean;
-    activity: any;
+	activity: any;
 	dateField: string;
 };
 
-const Calendar: React.FC<Props> = ({ type = "normal", togglable = false, activity,dateField }) => {
+const Calendar: React.FC<Props> = ({
+	type = "normal",
+	togglable = false,
+	activity,
+	dateField,
+}) => {
 	return type === "activity" ? (
-        <>
-            <h1>Activity Calendar</h1>
-		    <CalendarComponent dateField={dateField} activity={activity} togglable={togglable} />
-        </>
+		<>
+			<CalendarComponent
+				dateField={dateField}
+				activity={activity}
+				togglable={togglable}
+			/>
+		</>
 	) : (
-		<CalendarComponent  dateField={dateField} togglable={togglable} />
+		<CalendarComponent dateField={dateField} togglable={togglable} />
 	);
 };
 
