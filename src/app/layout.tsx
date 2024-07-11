@@ -25,7 +25,7 @@ export default function RootLayout({
 			>
 				<ThemeProvider>
 					<Sidebar />
-					<div className="md:ml-64 relative md:flex-grow w-screen">
+					<div className=" relative md:flex-grow w-screen">
 						{children}
 					</div>
 					<ToastContainer />

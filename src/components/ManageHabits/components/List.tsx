@@ -3,14 +3,13 @@ import React, { startTransition, useState, useOptimistic } from "react";
 import {
 	CompleteAndIncompleteHabits,
 	CompleteHabit,
-	Habit,
 	IncompleteHabit,
 } from "@/app/manage/actions";
 import { DndProvider } from "react-dnd";
-import { HTML5Backend } from "react-dnd-html5-backend";
 import DropList from "./Drop/DropList";
 import JournalModal from "../JournalModal";
-
+import HTML5toTouch from "./HTML5ToTouchBackend";
+import { MultiBackend } from "dnd-multi-backend";
 type Props = {
 	habits: CompleteAndIncompleteHabits;
 };
@@ -19,9 +18,10 @@ const HabitList: React.FC<Props> = ({ habits }) => {
 	const [localData, setLocalData] =
 		useOptimistic<CompleteAndIncompleteHabits>(habits);
 	const [journalToggled, setJournalToggled] = useState(false);
-
+	const [ completedHabitId, setCompletedHabitId ] = useState<string | null>(null);
 	const handleIncompleteToComplete = async (id: string) => {
 		try {
+			setCompletedHabitId(id);
 			setJournalToggled(true);
 			const response = await CompleteHabit(id);
 			startTransition(() => {
@@ -92,7 +92,7 @@ const HabitList: React.FC<Props> = ({ habits }) => {
 
 	return (
 		<div className="flex gap-10 relative">
-			<DndProvider backend={HTML5Backend}>
+			<DndProvider backend={MultiBackend} options={HTML5toTouch}>
 				<div className="space-y-4">
 					<h1 className="text-2xl font-bold">In progress</h1>
 					<DropList
@@ -106,6 +106,7 @@ const HabitList: React.FC<Props> = ({ habits }) => {
 					{journalToggled && (
 						<JournalModal
 							onClose={() => setJournalToggled(false)}
+							completedHabitId={completedHabitId}
 						/>
 					)}
 					<h1 className="text-2xl font-bold">Completed</h1>

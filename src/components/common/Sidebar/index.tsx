@@ -32,11 +32,11 @@ const Sidebar = () => {
             {/* Sidebar */}
             <aside
                 className={clsx(
-                    "fixed top-0 left-0 z-40 w-64 h-screen shadow-2xl bg-lightModeSecondary dark:bg-darkModeSecondary transform transition-transform",
+                    "fixed top-0 left-0 z-40 w-64 h-screen shadow-2xl bg-lightModeSecondary dark:bg-darkModeSecondary transform transition-transform md:sticky",
                     {
-                        '-translate-x-full': !isOpen,
                         'translate-x-0': isOpen,
-                        'md:translate-x-0 md:relative md:fixed': true,
+                        '-translate-x-full': !isOpen,
+                        'md:translate-x-0': true,
                     }
                 )}
                 aria-label="Sidebar"
