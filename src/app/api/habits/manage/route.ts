@@ -50,3 +50,5 @@ export const GET = async(req: NextRequest) => {
 		return NextResponse.json({ error: "Error fetching habits" }, { status: 500 });
 	}
 }
+
+export const dynamic = 'force-dynamic';

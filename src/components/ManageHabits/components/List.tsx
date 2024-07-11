@@ -1,20 +1,14 @@
 "use client";
-import React, {
-	startTransition,
-	useState,
-	useEffect,
-	useOptimistic,
-} from "react";
+import React, { startTransition, useState, useOptimistic } from "react";
 import {
 	CompleteAndIncompleteHabits,
 	CompleteHabit,
+	Habit,
 	IncompleteHabit,
 } from "@/app/manage/actions";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import DropList from "./Drop/DropList";
-import { revalidatePath } from "next/cache";
-import { Database } from "../../../../types/supabase";
 import JournalModal from "../JournalModal";
 
 type Props = {
@@ -37,6 +31,11 @@ const HabitList: React.FC<Props> = ({ habits }) => {
 					);
 					if (!habitToMove) return state;
 
+					const updatedHabit = {
+						...habitToMove,
+						habit_id: id,
+					};
+
 					return {
 						...state,
 						incompleteHabits: state.incompleteHabits.filter(
@@ -44,11 +43,8 @@ const HabitList: React.FC<Props> = ({ habits }) => {
 						),
 						completedHabits: [
 							...state.completedHabits,
-							habitToMove,
-						].filter(
-							(habit): habit is NonNullable<typeof habit> =>
-								habit !== undefined
-						),
+							updatedHabit,
+						],
 					};
 				});
 			});
@@ -67,11 +63,19 @@ const HabitList: React.FC<Props> = ({ habits }) => {
 
 					if (!habitToMove) return state;
 
+					const updatedHabit = {
+						...habitToMove,
+						id: habitToMove.id!,
+						ordering: null,
+						title: "", // or some default title if necessary
+						user_id: null,
+					};
+
 					return {
 						...state,
 						incompleteHabits: [
 							...state.incompleteHabits,
-							habitToMove,
+							updatedHabit,
 						],
 						completedHabits: state.completedHabits.filter(
 							(habit) => habit.id !== id
@@ -85,9 +89,8 @@ const HabitList: React.FC<Props> = ({ habits }) => {
 			}
 		});
 	};
-	console.log(journalToggled)
+
 	return (
-		
 		<div className="flex gap-10 relative">
 			<DndProvider backend={HTML5Backend}>
 				<div className="space-y-4">

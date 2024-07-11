@@ -36,7 +36,7 @@ const Insights: React.FC<Props> = ({ completions, startDate, endDate, habit }) =
 			setFrequency(getFrequency(habitCompletions, startDate, endDate, habit.created_at));
 			setMissedDays(getMissedDays(habitCompletions, startDate, endDate, habit.created_at));
 		}
-	}, [habitCompletions, startDate, endDate]);
+	}, [habitCompletions, startDate, endDate, habit.created_at]);
 	return (
 		<div className="flex flex-col items-center mt-10">
 				<ul className="flex justify-center flex-wrap gap-5 md:max-w-[400px] max-w-[250px] w-full ">

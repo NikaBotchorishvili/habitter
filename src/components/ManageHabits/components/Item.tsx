@@ -1,11 +1,11 @@
 "use client";
 import React, { useRef } from "react";
-import { Database } from "../../../../types/supabase";
 import { useDrag } from "react-dnd";
 import { itemTypes } from "./types/ItemTypes";
+import { Habit } from "@/app/manage/actions";
 
 type Props = {
-	habit: Database["public"]["Tables"]["habits"]["Row"];
+	habit: Habit;
 	type: itemTypes;
 	index: number;
 };

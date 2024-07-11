@@ -1,6 +1,5 @@
 import React from "react";
 import CalendarComponent from "./Calendar";
-import { Habit } from "@/app/manage/actions";
 
 type Props = {
 	type?: "activity" | "normal";

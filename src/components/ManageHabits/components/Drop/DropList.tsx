@@ -4,9 +4,10 @@ import { useDrop } from "react-dnd";
 import { itemTypes } from "../types/ItemTypes";
 import { Database } from "../../../../../types/supabase";
 import HabitItem from "../Item";
+import { Habit } from "@/app/manage/actions";
 
 type Props = {
-	habits: Database["public"]["Tables"]["habits"]["Row"][];
+	habits: Habit[];
 	type: itemTypes;
 	accept: itemTypes;
 	handleFunction: (id: string) => Promise<void>;

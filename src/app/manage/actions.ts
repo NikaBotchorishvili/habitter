@@ -6,9 +6,10 @@ import { revalidateTag } from "next/cache";
 
 type CompletedHabit = Database["public"]["Tables"]["completed_habits"]["Row"];
 export type Habit = Database["public"]["Tables"]["habits"]["Row"];
+export type CompleteHabitType = Database["public"]["Tables"]["completed_habits"]["Row"];
 export type CompleteAndIncompleteHabits = {
-	completedHabits: Database["public"]["Tables"]["completed_habits"]["Row"][];
-	incompleteHabits: Database["public"]["Tables"]["habits"]["Row"][];
+	completedHabits: Habit[];
+	incompleteHabits: Habit[]
 };
 
 export const getHabitsByCurrentUser = async (): Promise<
@@ -25,7 +26,6 @@ export const getHabitsByCurrentUser = async (): Promise<
 		}
 
 		const data = await response.json();
-
 		return data;
 	} catch (err) {
 		console.error("Error", err);

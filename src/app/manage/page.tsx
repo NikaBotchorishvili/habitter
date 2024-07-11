@@ -11,6 +11,7 @@ const Manage = async () => {
 	if (currentUser === null) return null;
 	const habits = await getHabitsByCurrentUser();
 	const allUserCompletedHabits = await UserActivity();
+	console.log(habits)
 	return (
 		<PrivateRoute>
 			<XCenterContainer>
