@@ -39,19 +39,19 @@ export type Database = {
         Row: {
           content: string | null
           entry_datetime: string
-          id: string | null
+          id: string
           user_id: string | null
         }
         Insert: {
           content?: string | null
           entry_datetime?: string
-          id?: string | null
+          id?: string
           user_id?: string | null
         }
         Update: {
           content?: string | null
           entry_datetime?: string
-          id?: string | null
+          id?: string
           user_id?: string | null
         }
         Relationships: [
@@ -60,6 +60,35 @@ export type Database = {
             columns: ["user_id"]
             isOneToOne: false
             referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      habit_completion_journal: {
+        Row: {
+          completed_habit_id: string | null
+          content: string
+          created_at: string
+          id: number
+        }
+        Insert: {
+          completed_habit_id?: string | null
+          content: string
+          created_at?: string
+          id?: number
+        }
+        Update: {
+          completed_habit_id?: string | null
+          content?: string
+          created_at?: string
+          id?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "habit_completion_journal_completed_habit_id_fkey"
+            columns: ["completed_habit_id"]
+            isOneToOne: false
+            referencedRelation: "completed_habits"
             referencedColumns: ["id"]
           },
         ]

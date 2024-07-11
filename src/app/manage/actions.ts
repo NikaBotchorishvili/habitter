@@ -1,4 +1,4 @@
-"use server"
+"use server";
 
 import { Database } from "../../../types/supabase";
 import fetchWrapper from "@/utils/fetchWrapper";
@@ -6,10 +6,11 @@ import { revalidateTag } from "next/cache";
 
 type CompletedHabit = Database["public"]["Tables"]["completed_habits"]["Row"];
 export type Habit = Database["public"]["Tables"]["habits"]["Row"];
-export type CompleteHabitType = Database["public"]["Tables"]["completed_habits"]["Row"];
+export type CompleteHabitType =
+	Database["public"]["Tables"]["completed_habits"]["Row"];
 export type CompleteAndIncompleteHabits = {
 	completedHabits: Habit[];
-	incompleteHabits: Habit[]
+	incompleteHabits: Habit[];
 };
 
 export const getHabitsByCurrentUser = async (): Promise<
@@ -78,7 +79,9 @@ export const IncompleteHabit = async (
 		return undefined;
 	}
 };
-export const UserActivity = async (): Promise<{data: Habit[]} | undefined> => {
+export const UserActivity = async (): Promise<
+	{ data: Habit[] } | undefined
+> => {
 	try {
 		const response = await fetchWrapper(`api/habits/manage/complete`, {
 			method: "GET",
@@ -94,5 +97,25 @@ export const UserActivity = async (): Promise<{data: Habit[]} | undefined> => {
 	} catch (error) {
 		console.error("Error", error);
 		return undefined;
+	}
+};
+
+export const addCompletedHabitEntry = async (
+	completed_habit_id: string,
+	content: string
+) => {
+	try {
+		const response = await fetchWrapper(`api/habits/manage/journal`, {
+			method: "POST",
+			body: { habit_id: completed_habit_id, content: content },
+		});
+		if (!response.ok) {
+			throw new Error("Error adding journal entry");
+		}
+		const data = await response.json();
+		revalidateTag("habit-entry");
+		return data;
+	} catch (error) {
+		console.error("Error", error);
 	}
 };

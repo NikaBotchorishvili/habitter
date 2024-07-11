@@ -1,5 +1,5 @@
 "use client";
-import React, { startTransition, useState, useOptimistic } from "react";
+import React, { startTransition, useEffect } from "react";
 import {
 	CompleteAndIncompleteHabits,
 	CompleteHabit,
@@ -10,15 +10,28 @@ import DropList from "./Drop/DropList";
 import JournalModal from "../JournalModal";
 import HTML5toTouch from "./HTML5ToTouchBackend";
 import { MultiBackend } from "dnd-multi-backend";
+import { useJournalContext } from "../context/JournalContext";
+
 type Props = {
 	habits: CompleteAndIncompleteHabits;
 };
 
 const HabitList: React.FC<Props> = ({ habits }) => {
-	const [localData, setLocalData] =
-		useOptimistic<CompleteAndIncompleteHabits>(habits);
-	const [journalToggled, setJournalToggled] = useState(false);
-	const [ completedHabitId, setCompletedHabitId ] = useState<string | null>(null);
+	const {
+		completedHabitId,
+		journalToggled,
+		setCompletedHabitId,
+		setJournalToggled,
+		setLocalData,
+		localData,
+	} = useJournalContext();
+	
+	useEffect(() => {
+		startTransition(() => {
+			setLocalData(habits);
+		});
+	}, [habits]);
+
 	const handleIncompleteToComplete = async (id: string) => {
 		try {
 			setCompletedHabitId(id);
@@ -54,6 +67,7 @@ const HabitList: React.FC<Props> = ({ habits }) => {
 	};
 
 	const handleCompleteToIncomplete = async (id: string) => {
+		console.log("hello")
 		startTransition(async () => {
 			try {
 				setLocalData((state) => {
@@ -67,7 +81,7 @@ const HabitList: React.FC<Props> = ({ habits }) => {
 						...habitToMove,
 						id: habitToMove.id!,
 						ordering: null,
-						title: "", // or some default title if necessary
+						title: habitToMove.title, // or some default title if necessary
 						user_id: null,
 					};
 
@@ -90,35 +104,41 @@ const HabitList: React.FC<Props> = ({ habits }) => {
 		});
 	};
 
+	const handleModalClose = () => {
+		setJournalToggled(false);
+		setCompletedHabitId(null);
+	};
 	return (
-		<div className="flex gap-10 relative">
-			<DndProvider backend={MultiBackend} options={HTML5toTouch}>
-				<div className="space-y-4">
-					<h1 className="text-2xl font-bold">In progress</h1>
-					<DropList
-						type="incomplete"
-						accept="completed"
-						handleFunction={handleCompleteToIncomplete}
-						habits={localData.incompleteHabits}
-					/>
-				</div>
-				<div className="relative space-y-4">
-					{journalToggled && (
-						<JournalModal
-							onClose={() => setJournalToggled(false)}
-							completedHabitId={completedHabitId}
+		<>
+			{journalToggled && (
+				<JournalModal
+					onClose={handleModalClose}
+					completedHabitId={completedHabitId}
+				/>
+			)}
+			<div className="flex gap-10 relative">
+				<DndProvider backend={MultiBackend} options={HTML5toTouch}>
+					<div className="space-y-4">
+						<h1 className="text-2xl font-bold">In progress</h1>
+						<DropList
+							type="incomplete"
+							accept="completed"
+							handleFunction={handleCompleteToIncomplete}
+							habits={localData.incompleteHabits}
 						/>
-					)}
-					<h1 className="text-2xl font-bold">Completed</h1>
-					<DropList
-						type="completed"
-						accept="incomplete"
-						handleFunction={handleIncompleteToComplete}
-						habits={localData.completedHabits}
-					/>
-				</div>
-			</DndProvider>
-		</div>
+					</div>
+					<div className="relative space-y-4">
+						<h1 className="text-2xl font-bold">Completed</h1>
+						<DropList
+							type="completed"
+							accept="incomplete"
+							handleFunction={handleIncompleteToComplete}
+							habits={localData.completedHabits}
+						/>
+					</div>
+				</DndProvider>
+			</div>
+		</>
 	);
 };
 

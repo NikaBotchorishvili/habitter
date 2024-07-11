@@ -4,7 +4,7 @@ import "react-toastify/dist/ReactToastify.css";
 import "./globals.css";
 
 import Sidebar from "@/components/common/Sidebar";
-import { ThemeProvider } from "@/providers/ThemeProvider";
+import Providers from "@/providers/Providers";
 
 const robotoMono = Roboto_Mono({ subsets: ["latin"], weight: ["400"] });
 export const metadata: Metadata = {
@@ -23,13 +23,13 @@ export default function RootLayout({
 			<body
 				className={`${robotoMono.className} flex bg-lightModeBackground dark:bg-darkModeBackground`}
 			>
-				<ThemeProvider>
+				<Providers>
 					<Sidebar />
 					<div className=" relative md:flex-grow w-screen">
 						{children}
 					</div>
 					<ToastContainer />
-				</ThemeProvider>
+				</Providers>
 			</body>
 		</html>
 	);
