@@ -9,8 +9,11 @@ import { DndProvider } from "react-dnd";
 import DropList from "./Drop/DropList";
 import JournalModal from "../JournalModal";
 import HTML5toTouch from "./HTML5ToTouchBackend";
-import { MultiBackend } from "dnd-multi-backend";
+import { isMobile } from "react-device-detect";
+
 import { useJournalContext } from "../context/JournalContext";
+import { TouchBackend } from "react-dnd-touch-backend";
+import { HTML5Backend } from "react-dnd-html5-backend";
 
 type Props = {
 	habits: CompleteAndIncompleteHabits;
@@ -25,7 +28,7 @@ const HabitList: React.FC<Props> = ({ habits }) => {
 		setLocalData,
 		localData,
 	} = useJournalContext();
-	
+
 	useEffect(() => {
 		startTransition(() => {
 			setLocalData(habits);
@@ -67,7 +70,7 @@ const HabitList: React.FC<Props> = ({ habits }) => {
 	};
 
 	const handleCompleteToIncomplete = async (id: string) => {
-		console.log("hello")
+		console.log("hello");
 		startTransition(async () => {
 			try {
 				setLocalData((state) => {
@@ -108,6 +111,7 @@ const HabitList: React.FC<Props> = ({ habits }) => {
 		setJournalToggled(false);
 		setCompletedHabitId(null);
 	};
+
 	return (
 		<>
 			{journalToggled && (
@@ -117,7 +121,7 @@ const HabitList: React.FC<Props> = ({ habits }) => {
 				/>
 			)}
 			<div className="flex gap-10 relative">
-				<DndProvider backend={MultiBackend} options={HTML5toTouch}>
+				<DndProvider backend={isMobile ? TouchBackend : HTML5Backend}>
 					<div className="space-y-4">
 						<h1 className="text-2xl font-bold">In progress</h1>
 						<DropList
